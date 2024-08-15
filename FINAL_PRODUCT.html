@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boards</title>
+    <style>
+        body {
+            font-family: Times New Roman, serif;
+            background-color: lavender;
+        }
+        nav a {
+            margin-right: 10px;
+            text-decoration: none;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Boards Page</h1>
+    </header>
+    <nav>
+        <h2>Navigation</h2>
+        <a href="index.html">Home</a><br>
+        <a href="meme.html">Meme</a><br>
+        <a href="game.html">Game</a><br>
+        <a href="palindrome.html">Palindrome</a><br>
+        <a href="user-input.html">User Input</a><br>
+        <a href="boards.html">Boards</a><br>
+        <a href="table_page.html">Table</a><br>
+    </nav>
+    <main>
+        <p>This page is about boards. Use the navigation menu to access other pages.</p>
+    </main>
+    <footer id="footer">
+        Mason<br>
+        University of Advancing Technology<br>
+        2625 W Baseline Rd<br>
+        Tempe, AZ 85283<br>
+    </footer>
+
+    <script>
+        // Get today's date
+        const today = new Date();
+        // Format date as 2024-08-14
+        const formattedDate = today.toISOString().split('T')[0];
+        // Insert date into footer
+        document.getElementById('footer').innerHTML += `Date: ${formattedDate}`;
+    </script>
+</body>
+</html>
+
+
+
