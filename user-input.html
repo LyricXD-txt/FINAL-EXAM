@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move the Meme</title>
+    <style>
+        /* Set a bright orange background color for the page */
+        body {
+            background-color: #FFA500; /* Orange */
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Style for the meme image */
+        #meme {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            width: 500px;
+            height: 500px;
+        }
+
+        /* Style for buttons */
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 20px;
+            cursor: pointer;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+        }
+
+        button:disabled {
+            background-color: #CCCCCC;
+        }
+
+        /* Style for the container to center elements */
+        .container {
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Author: Mason -->
+    <!-- Mason's HTML file -->
+    <div class="container">
+        <!-- Start button -->
+        <button id="startButton" onclick="startMoving()">Start</button>
+        <!-- Stop button -->
+        <button id="stopButton" onclick="stopMoving()" disabled>Stop</button>
+    </div>
+    
+    <!-- Meme image -->
+    <img id="meme" src="https://raw.githubusercontent.com/LyricXD-txt/event-driven-programming/main/College_meme.jpg" alt="Meme Image">
+
+    <!-- Sound effects -->
+    <audio id="startSound" src="https://github.com/LyricXD-txt/Event_Driven_W-Audio/blob/main/Thunder_Sound.mp3?raw=true"></audio>
+    <audio id="stopSound" src="https://github.com/LyricXD-txt/Event_Driven_W-Audio/blob/main/Thunder_Sound.mp3?raw=true"></audio>
+
+    <script>
+        // Initialize a variable for the moving interval
+        let moveInterval;
+
+        // Function to start moving the meme image
+        function startMoving() {
+            // Play start sound
+            document.getElementById('startSound').play();
+
+            // Disable the start button
+            document.getElementById('startButton').disabled = true;
+            // Enable the stop button
+            document.getElementById('stopButton').disabled = false;
+
+            // Call the function to move the meme image every 100ms
+            moveInterval = setInterval(moveMeme, 100);
+        }
+
+        // Function to stop moving the meme image
+        function stopMoving() {
+            // Play stop sound
+            document.getElementById('stopSound').play();
+
+            // Disable the stop button
+            document.getElementById('stopButton').disabled = true;
+            // Enable the start button
+            document.getElementById('startButton').disabled = false;
+
+            // Clear the interval to stop moving the meme image
+            clearInterval(moveInterval);
+        }
+
+        // Function to move the meme image to random positions
+        function moveMeme() {
+            // Get the meme image element
+            const meme = document.getElementById('meme');
+            // Calculate random positions within the window bounds
+            const randomX = Math.floor(Math.random() * (window.innerWidth - meme.width));
+            const randomY = Math.floor(Math.random() * (window.innerHeight - meme.height));
+
+            // Set the meme image's new position
+            meme.style.left = randomX + 'px';
+            meme.style.top = randomY + 'px';
+        }
+    </script>
+</body>
+</html>
+

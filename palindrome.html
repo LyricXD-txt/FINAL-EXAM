@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Mason's Palindrome Checker -->
+    <!-- Created by Mason -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Checker</title>
+    <style>
+        /* Basic reset for margin and padding */
+        body, h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Setting the background color and font family */
+        body {
+            background-color: #add8e6; /* Light blue background */
+            font-family: 'Times New Roman', Times, serif;
+            position: relative; /* For absolute positioning of image */
+            height: 100vh;
+            overflow: hidden; /* Prevents scrollbars if content is too large */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column; /* Align items vertically */
+        }
+
+        /* Styling the initial image */
+        #initial-image {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 500px; /* Set width to 500px */
+            height: 500px; /* Set height to 500px */
+        }
+
+        /* Container for the images on the left */
+        #image-container {
+            position: absolute;
+            left: 10px; /* Adjust the distance from the left */
+            top: 50%;
+            transform: translateY(-50%); /* Center vertically */
+            z-index: 1; /* Ensure image is above other content */
+        }
+
+        /* Styling the images */
+        #image-container img {
+            width: 500px;
+            height: 500px;
+            display: none; /* Hide the images initially */
+        }
+
+        /* Centering the main content */
+        #main-content {
+            position: relative;
+            z-index: 2; /* Ensure content is above the images */
+        }
+
+        /* Styling the header */
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Styling the result text */
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #006400;
+        }
+
+        /* Styling the prompt box */
+        #prompt-box {
+            margin-top: 20px;
+        }
+
+        /* Adding some custom styles to the button */
+        button {
+            background-color: #008cba;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        /* Adding hover effect to the button */
+        button:hover {
+            background-color: #005f5f;
+        }
+
+        /* Styling the input fields */
+        input[type="text"] {
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        /* Styling for the secret image */
+        #secret-image {
+            display: none; /* Hide initially */
+            margin-top: 20px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Initial image displayed when the page loads -->
+    <img id="initial-image" src="https://raw.githubusercontent.com/LyricXD-txt/Palindrome/main/Cat_Waving2.jfif" alt="Welcome Image">
+
+    <!-- Container for the images on the left -->
+    <div id="image-container">
+        <!-- Image for not a palindrome -->
+        <img id="non-palindrome-image" src="https://raw.githubusercontent.com/LyricXD-txt/Palindrome/main/Sad_Cat.jpg" alt="Not a Palindrome">
+        <!-- Image for a palindrome -->
+        <img id="palindrome-image" src="https://raw.githubusercontent.com/LyricXD-txt/Palindrome/main/Happy_Cat.jpg" alt="Palindrome">
+    </div>
+    <!-- Main content -->
+    <div id="main-content">
+        <h1>Palindrome Checker</h1>
+        <!-- Form for user input -->
+        <form id="user-form" onsubmit="return validateForm()">
+            <input type="text" id="first-name" placeholder="First Name" required>
+            <input type="text" id="last-name" placeholder="Last Name" required>
+            <input type="text" id="zip-code" placeholder="Zip Code" required>
+            <button type="submit">Submit</button>
+        </form>
+        <!-- Container for results -->
+        <p id="result"></p>
+        <!-- Container for secret image -->
+        <img id="secret-image" src="https://raw.githubusercontent.com/LyricXD-txt/User-Input/main/Happy_Cat.jpg" alt="Secret Image">
+    </div>
+    <!-- Script for validation and palindrome logic -->
+    <script>
+        // Function to check if a word is a palindrome
+        function isPalindrome(word) {
+            // Add special case to recognize "Hi Professor!" as a palindrome
+            if (word.toLowerCase() === "hi professor!") return true;
+            // Remove non-alphanumeric characters and convert to lowercase
+            const cleanedWord = word.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+            // Check if the cleaned word is the same forwards and backwards
+            return cleanedWord === cleanedWord.split('').reverse().join('');
+        }
+
+        // Function to validate the form
+        function validateForm() {
+            // Get the values from the input fields
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            const zipCode = document.getElementById('zip-code').value;
+
+            // Combine first name and last name
+            const fullName = `${firstName} ${lastName}`;
+
+            // Check if the full name exceeds 20 characters
+            if (fullName.length > 20) {
+                alert('Full name must not exceed 20 characters.');
+                return false;
+            }
+
+            // Check if the zip code is valid (5 digits)
+            const zipCodePattern = /^\d{5}$/;
+            if (!zipCodePattern.test(zipCode)) {
+                alert('Zip code must be exactly 5 digits.');
+                return false;
+            }
+
+            // If inputs are valid, show the secret message and image, and change background color
+            showSecretMessage();
+            return false; // Prevent form submission
+        }
+
+        // Function to show the secret message and image, and change background color
+        function showSecretMessage() {
+            const secretMessage = "Welcome to the Palindrome Checker!";
+            document.getElementById('result').innerText = secretMessage;
+            document.getElementById('secret-image').style.display = 'block';
+            document.body.style.backgroundColor = '#722f37'; // Change background color to wine red
+        }
+
+        // Function to hide the initial image once the page is interacted with
+        function hideInitialImage() {
+            document.getElementById('initial-image').style.display = 'none';
+        }
+
+        // Add an event listener to hide the initial image when the page is interacted with
+        document.addEventListener('click', hideInitialImage);
+        document.addEventListener('keydown', hideInitialImage);
+    </script>
+</body>
+</html>
+
+
